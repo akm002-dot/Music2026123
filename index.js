@@ -1,5 +1,5 @@
 //songsUrl = "https://localhost:7188/api/Songs";
-songsUrl = "https://amboat2026-a8c5aye0e0agcdez.germanywestcentral-01.azurewebsites.net/api/songs";
+songsUrl = "https://bottles220261005101940-d7g4gyabd9bgd4dk.eastasia-01.azurewebsites.net/api/songs";
 
 
 Vue.createApp({
@@ -7,7 +7,7 @@ Vue.createApp({
         return {
             songs: [],
             message: null,
-            newSong: { Title: "", Artist: "", PublishYear: "", Genre: "" },
+            newSong: { Title: "", Artist: "", PublishYear: 0, Genre: "" },
         }
     },
     methods: {
@@ -21,31 +21,31 @@ Vue.createApp({
                     this.message = "Failed to fetch songs - " + ex.message;
                 });
         },
-    },
-    mounted() {
-        this.GetAllSongs();
-    },
-    AddSong(newSong) {
-            axios.post(songsUrl, newSong)
+    
+    AddSong() {
+        console.log("Adding song: ", this.newSong);
+            axios.post(songsUrl, this.newSong)
                 .then(response => {
                     this.message = "Song added successfully";
+                    console.log("Added song: ", response.data);
 
                     this.newSong = {
-                        Title: "",
-                        Artist: "",
-                        PublishYear: "",
-                        Genre: ""
+                        Title,
+                        Artist,
+                        PublishYear,
+                        Genre
                     };
                 })
                 .catch(ex => {
                     this.message = "Failed to add song - " + ex.message;
+
                 });
     },
-    SearchSong(text, option) {
+    SearchSong(option, text) {
     axios.get(songsUrl + "/search", {
         params: {
-            text: text,
-            option: option
+            property: option,
+            text: text
         }
     })
     .then(response => {
@@ -55,5 +55,9 @@ Vue.createApp({
     .catch(ex => {
         this.message = "Failed to search songs - " + ex.message;
     });
+    },
 },
+    mounted() {
+        this.GetAllSongs();
+    }
 }).mount("#app")

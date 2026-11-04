@@ -45,10 +45,10 @@
     </div>
         <input v-model="newSong.Title" placeholder="New song Title" type="text">
         <input v-model="newSong.Artist" placeholder="New song Artist" type="text">
-        <input v-model="newSong.PublishYear" placeholder="New song PublishYear" type="text">
+        <input v-model="newSong.PublishYear" placeholder="New song PublishYear" type="number">
         <input v-model="newSong.Genre" placeholder="New song Genre" type="text">
 
-        <button class="btn btn-primary" @click="addSong(newSong)">Add song</button>
+        <button class="btn btn-primary" @click="AddSong(newSong)">Add song</button>
             
     </div>
 
@@ -72,7 +72,7 @@
 
         <button
             class="btn btn-primary"
-            @click="SearchSong(text, option)"
+            @click="SearchSong(option, text)"
         >
             Search song
         </button>
